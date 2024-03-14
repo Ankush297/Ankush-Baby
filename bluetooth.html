@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluetooth App</title>
+</head>
+<body>
+
+    <h1>Bluetooth App</h1>
+    <button id="connectButton">Connect to Device</button>
+    <div id="output"></div>
+
+    <script>
+        async function connectToDevice() {
+            try {
+                // Request Bluetooth device
+                const device = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: ['battery_service'] }] // Filter by service UUID (e.g., battery service)
+                });
+
+                // Connect to the device
+                const server = await device.gatt.connect();
+
+                // Get primary service
+                const service = await server.getPrimaryService('battery_service');
+
+                // Get characteristic
+                const characteristic = await service.getCharacteristic('battery_level');
+
+                // Read characteristic value
+                const value = await characteristic.readValue();
+                
+                // Display battery level
+                document.getElementById('output').innerText = `Battery Level: ${value.getUint8(0)}%`;
+            } catch (error) {
+                console.error('Bluetooth error:', error);
+                document.getElementById('output').innerText = 'Error occurred while connecting to Bluetooth device.';
+            }
+        }
+
+        document.getElementById('connectButton').addEventListener('click', connectToDevice);
+    </script>
+</body>
+</html>
