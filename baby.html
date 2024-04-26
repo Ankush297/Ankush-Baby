@@ -23,54 +23,49 @@
             margin-bottom: 20px;
         }
         h1 {
-    font-size: 32px; /* Default font size */
-}
-
-/* Media query for screens smaller than 768px (tablets and smartphones) */
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 28px; /* Adjusted font size */
-    }
-}
-
-/* Media query for screens smaller than 576px (smartphones) */
-@media screen and (max-width: 576px) {
-    h1 {
-        font-size: 24px; /* Further adjusted font size */
-    }
-}
-
-/* Media query for screens smaller than 360px (smaller smartphones) */
-@media screen and (max-width: 360px) {
-    h1 {
-        font-size: 20px; /* Adjusted font size for smaller smartphones */
-    }
-}
+            font-size: 32px; /* Default font size */
+        }
+        /* Media queries for responsive design */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+        }
+        @media screen and (max-width: 576px) {
+            h1 {
+                font-size: 24px;
+            }
+        }
+        @media screen and (max-width: 360px) {
+            h1 {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-       <center> <h1>Greeting Robot</h1></center>
+        <center><h1>Greeting Robot</h1></center>
         
         <div class="song">
             <h2>Greeting Tune</h2>
-            <audio controls>
+            <audio controls autoplay onended="playNext(this)">
                 <source src="The Weeknd - Save Your Tears (Official Music Video).mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
 
         <div class="song">
-            <h2>OM Chanting </h2>
-            <audio controls>
+            <h2>OM Chanting</h2>
+            <audio controls onended="playNext(this)">
                 <source src="The Weeknd - Save Your Tears (Official Music Video).mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
 
         <div class="song">
-            <h2 >Morning Prayer</h2>
-            <audio controls>
+            <h2>Morning Prayer</h2>
+            <audio controls onended="playNext(this)">
                 <source src="The Weeknd - Save Your Tears (Official Music Video).mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
@@ -78,7 +73,7 @@
 
         <div class="song">
             <h2>Creaters</h2>
-            <audio controls>
+            <audio controls onended="playNext(this)">
                 <source src="The Weeknd - Save Your Tears (Official Music Video).mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
@@ -86,7 +81,7 @@
 
         <div class="song">
             <h2>Fonder</h2>
-            <audio controls>
+            <audio controls onended="playNext(this)">
                 <source src="The Weeknd - Save Your Tears (Official Music Video).mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
@@ -94,23 +89,12 @@
     </div>
     <h2><a href="bluetooth.html">Hello</a></h2>
     <script>
-        var audioPlayers = document.querySelectorAll('audio');
-
-        audioPlayers.forEach(function(player) {
-            player.addEventListener('play', function(event) {
-                // Pause all other players when this player starts playing
-                audioPlayers.forEach(function(otherPlayer) {
-                    if (otherPlayer !== player && !otherPlayer.paused) {
-                        otherPlayer.pause();
-                    }
-                });
-            });
-
-            player.addEventListener('pause', function(event) {
-                // If this player was paused, reset its current time to the beginning
-                player.currentTime = 0;
-            });
-        });
+        function playNext(currentAudio) {
+            var nextAudio = currentAudio.parentElement.nextElementSibling.querySelector('audio');
+            if (nextAudio) {
+                nextAudio.play();
+            }
+        }
     </script>
 </body>
 </html>
